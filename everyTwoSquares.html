@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<title>Bejeweled</title>    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" charset="utf-8"></script> 
+<style>
+* {
+  margin: 0; 
+  padding: 0; 
+}
+
+table { 
+  border-collapse: collapse; 
+  border-spacing: 0; 
+}
+div{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
+}
+
+#Bejeweled { 
+  padding: 0px; 
+  margin: 0 auto; 
+  border: 2px solid #181818; 
+}
+
+#Bejeweled tr td { 
+  width: 60px; 
+  height: 60px; 
+}
+</style>
+
+<script>
+    $(document).ready(function(){
+      let tileColor = [
+        'red',
+        'orange',
+        'yellow',
+        'green',
+        'blue',
+        'indigo',
+        'violet'
+      ];
+    
+        var tile = 1;
+        for (var r=0; r<7; r++) {
+        var col = "";
+        for (var c=0; c<7; c++) { 
+            col += "<td data-pos='"+tile+"'></td>"; 
+            tile++; 
+        }
+        $("#Bejeweled").append("<tr>"+col+"</tr>");
+    }
+    
+
+
+    var matches = document.querySelectorAll("td");
+    matches.forEach(function(tile){
+    tile.bgColor = tileColor[Math.floor(Math.random() * tileColor.length)];
+    });
+
+    // This should be moved somewhere better
+    let WIDTH = 7;
+
+    // Define a function to rotate the colors?
+    function nextColor() {
+        return tileColor[Math.floor(Math.random() * tileColor.length)];
+    };
+
+    function numDistinctNeighbors(i) {
+        result = 0;
+        // No tile to left, or different than tile to left
+        if (i == 0 || matches[i].bgColor !== matches[i-1].bgColor) {
+            result++;
+        }
+        // No tile to right, or different than tile to right
+        if (i == matches.length - 1 || matches[i].bgColor !== matches[i+1].bgColor) {
+            result++;
+        }
+        // No tile above, or different than tile above
+        if (i < WIDTH || matches[i].bgColor !== matches[i-WIDTH].bgColor) {
+            result++;
+        }
+        // No tile below, or different than tile below
+        if (i > matches.length - WIDTH - 1 || matches[i].bgColor !== matches[i+WIDTH].bgColor) {
+            result++;
+        }
+        return result;
+    };
+
+    for (var i = 0; i < matches.length; i++) {
+        //matches[i].bgColor = 'blue';
+        while (numDistinctNeighbors(i) != 4) {
+            matches[i].bgColor = nextColor();
+        }
+    }
+});
+</script> 
+</head>
+<body>
+
+<table id='Bejeweled'>
+</table>
+             
+</body>  
+</html>

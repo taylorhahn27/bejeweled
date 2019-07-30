@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<title>Bejeweled</title>    
+ 
+<style>
+* {
+  margin: 0; 
+  padding: 0; 
+}
+
+table { 
+  border-collapse: collapse; 
+  border-spacing: 0; 
+}
+
+#Bejeweled { 
+  padding: 0px; 
+  margin: 0 auto; 
+  border: 2px solid #181818; 
+}
+
+#Bejeweled tr td { 
+  width: 60px; 
+  height: 60px; 
+}
+</style>
+
+<script>
+    $(document).ready(function(){
+      let tileColor = [
+        'red',
+        'orange',
+        'yellow',
+        'blue',
+        'indigo',
+        'violet'
+      ];
+    
+        var tile = 1;
+        for (var r = 0; r < 7; r++) {
+          var col = "";
+            for (var c = 0; c < 7; c++) { 
+              col += "<td data-pos='"+tile+"'></td>"; 
+              tile++; 
+          }
+          $("#Bejeweled").append("<tr>"+col+"</tr>");
+        }
+    
+    var matches = document.querySelectorAll("td");
+    matches.forEach(function(tile){
+    tile.bgColor = tileColor[Math.floor(Math.random() * tileColor.length)];
+    });		
+
+    
+    for (let i = 0; i < matches.length; i++){
+
+        while (numDistinctNeighbors(i) != 4) {
+        //check right
+        if (matches[i] == matches[i+1] && matches[i] == matches[i+2]) {
+        tile.bgColor = 
+        flag = 0;
+        } else {
+            flag++;
+        }
+        //check down
+        if (matches[i] == matches[i + matches.length] && matches[i] == matches[2*(i + matches.length)]) { 
+        tile.bgColor = tileColor[Math.floor(Math.random() * tileColor.length)];
+        flag = 0;
+        } else {
+            flag++;
+        }
+        //check up
+        if (matches[i] == matches[i - matches.length] && matches[i] == matches[2*(i - matches.length)]) {
+          tile.bgColor = tileColor[Math.floor(Math.random() * tileColor.length)];
+          flag = 0;
+        } else {
+            flag++;
+        }
+        //check left
+        if (matches[i] == matches[i - 1] && matches[i] == matches[(i - 2)]) {
+        flag = 0;
+          tile.bgColor = tileColor[Math.floor(Math.random() * tileColor.length)];
+        } 
+    }
+  };
+});
+    </script> 
+</head>
+<body>
+
+<table id='Bejeweled'>
+</table>
+             
+</body>  
+</html>
